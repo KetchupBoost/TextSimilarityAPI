@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ProjectTreeColorHighlighter">
     <files>
+      <node color="7" path="$PROJECT_DIR$/backend" />
+      <node color="2" path="$PROJECT_DIR$/backend/api" />
+      <node color="6" path="$PROJECT_DIR$/backend/auth" />
+      <node color="8" path="$PROJECT_DIR$/backend/backend" />
+      <node color="3" path="$PROJECT_DIR$/backend/predictor" />
+      <node color="5" path="$PROJECT_DIR$/backend/predictor/migrations" />
       <node color="5" path="$PROJECT_DIR$/backend/predictor/Models" />
       <node color="8" path="$PROJECT_DIR$/backend/predictor/Models/Data" />
       <node color="4" path="$PROJECT_DIR$/backend/predictor/Models/Data/test" />
