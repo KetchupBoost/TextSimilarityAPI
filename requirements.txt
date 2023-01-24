@@ -1,5 +1,4 @@
 asgiref==3.5.2
-certifi @ file:///C:/b/abs_ac29jvt43w/croot/certifi_1665076682579/work/certifi
 Django==4.1.4
 djangorestframework==3.14.0
 pytz==2022.6
