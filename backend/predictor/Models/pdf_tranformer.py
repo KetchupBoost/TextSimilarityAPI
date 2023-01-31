@@ -1,42 +1,34 @@
-import ocrmypdf
-import pandas as pd
-import fitz
 import os
-import numpy as np
-from pathlib import Path 
-from glob import glob as gb
-from tempfile import TemporaryDirectory
+import fitz
+import ocrmypdf
 
-''' Get PDF '''
-pdf_folder = os.chdir('./Data/raw/')
-pdfs = [f for f in os.listdir(path = pdf_folder) if f.endswith('.pdf') or f.endswith('.PDF')]
+PATH_PDF = './Data/raw/'
 
-error_log = {}
 
-for file in pdfs:
-    try:
-        result = ocrmypdf.ocr(file, f"/{file}" ,output_type='pdf',skip_text=True,deskew=True)
-    except Exception as e:
-        if hasattr(e,'message'):
-            error_log[file] = e.message
-        else:
-            error_log[file] = e
-        continue
+def get_pdf(path=PATH_PDF):
+    pdfs_list = [f for f in os.listdir(path) if f.endswith('.pdf') or f.endswith('.PDF')]
+    error_log = {}
+
+    for pdfs in pdfs_list:
+        try:
+            ocrmypdf.ocr(path + pdfs, path + pdfs, output_type='pdf', skip_text=True, deskew=True)
+        except Exception as e:
+            error_log[pdfs] = e
+
 
 # PDF extraction
 # informations we want to extract
-extraction_pdfs = {}
-ocr_file_list = [f for f in os.listdir(path='./Data/raw') if f.startswith('Be')]
+def extract_text(path=PATH_PDF):
+    pdfs_list = [f for f in os.listdir(path) if f.endswith('.pdf') or f.endswith('.PDF')]
+    extraction_pdfs = {}
 
-for file in ocr_file_list:
-    # save the results
-    # pages_df = pages_df = pd.DataFrame(columns=['text'])
-    pages_df = []
-    # file reader
-    doc = fitz.open(file)
+    for file in pdfs_list:
+        pages_df = []
+        # file reader
+        doc = fitz.open(f'{path}/{file}')
+        for page_num in range(doc.page_count):
+            page = doc.load_page(page_num)
+            pages_df.append(page.get_text('text'))
+        extraction_pdfs[file] = pages_df
 
-    for page_num in range(doc.page_count):
-        page = doc.load_page(page_num)
-        pages_df = pages_df.append(page.get_text('text'))
-
-    extraction_pdfs[file] = pages_df
+    return extraction_pdfs
