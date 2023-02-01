@@ -1,6 +1,7 @@
 import os
 import fitz
 import ocrmypdf
+import json
 
 PATH_PDF = './Data/raw/'
 
@@ -32,3 +33,10 @@ def extract_text(path=PATH_PDF):
         extraction_pdfs[file] = pages_df
 
     return extraction_pdfs
+
+
+# Save Dict in a JsonFile
+def text_json_save(dict_text):
+    json_pdfs = json.dumps(dict_text)
+    with open('./Data/json/pdf_dict.json', 'w') as json_file:
+        json_file.write(json.dumps(json_pdfs))
